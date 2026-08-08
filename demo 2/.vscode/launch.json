@@ -1,0 +1,35 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Spring Boot: demo",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "inventorymanagement.demo.DemoApplication",
+      "projectName": "demo",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "DB_USERNAME": "java_user",
+        "DB_PASSWORD": "temp_pass"
+      }
+    },
+    {
+      "name": "Maven: spring-boot:run",
+      "type": "java",
+      "request": "launch",
+      "mainClass": "org.springframework.boot.loader.launch.JarLauncher",
+      "projectName": "demo",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "spring-boot:run"
+      ],
+      "env": {
+        "DB_USERNAME": "java_user",
+        "DB_PASSWORD": "temp_pass"
+      },
+      "classpath": "${workspaceFolder}/target/classes"
+    }
+  ]
+}
