@@ -1,20 +1,16 @@
 package inventorymanagement.demo;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int sku;
 
     private String name;
     private double price;
-    private int sku;
     private int onHand;
 
     public Product() {
@@ -25,10 +21,6 @@ public class Product {
         this.price = price;
         this.sku = sku;
         this.onHand = onHand;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

@@ -1,5 +1,4 @@
 inventorymanagement/demo/DemoApplication.class
-inventorymanagement/demo/SecurityConfig.class
 inventorymanagement/demo/ProductRepository.class
 inventorymanagement/demo/ProductController.class
 inventorymanagement/demo/Product.class

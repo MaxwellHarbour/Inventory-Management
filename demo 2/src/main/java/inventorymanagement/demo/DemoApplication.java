@@ -20,11 +20,10 @@ public class DemoApplication {
 
 	@EventListener(ApplicationReadyEvent.class)
 	public void insertSampleProduct() {
-		if (productRepository.count() == 0) {
-			productRepository.save(new Product("Sample Product", 19.99, 248234, 20));
-			productRepository.save(new Product("Sample Product2", 29.99, 248235, 15));
-			productRepository.save(new Product("Sample Product3", 39.99, 248236, 25));
-		}
+		productRepository.deleteAll();   // Clear existing products before inserting sample products
+		productRepository.save(new Product("Sample Product", 19.99, 248234, 20));
+		productRepository.save(new Product("Sample Product2", 29.99, 248235, 15));
+		productRepository.save(new Product("Sample Product3", 39.99, 248236, 25));
 	}
 
 }

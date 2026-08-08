@@ -1,6 +1,11 @@
 spring:
   application:
     name: demo
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration
   docker:
     compose:
       enabled: ${DOCKER_COMPOSE_ENABLED:false}
