@@ -12,7 +12,7 @@ spring:
   session:
     store-type: none
   datasource:
-    url: ${DB_URL:jdbc:mysql://localhost:3306/mydatabase?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:inventorydb}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
     username: ${DB_USERNAME:java_user}
     password: ${DB_PASSWORD:temp_pass}
     driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
