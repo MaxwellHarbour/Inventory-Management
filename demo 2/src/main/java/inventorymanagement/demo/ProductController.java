@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final ProductService productService;
 
-    public ProductController(ProductRepository productRepository) {
+    public ProductController(ProductRepository productRepository, ProductService productService) {
         this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     @GetMapping
@@ -32,29 +35,28 @@ public class ProductController {
     public Product getProductBySku(@PathVariable int sku) {
         return productRepository.findById(sku).orElseThrow(() -> new RuntimeException("Product not found"));
     }
-
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product createProduct(@RequestBody Product product) {
-        return productRepository.save(product);
+        return productService.saveProduct(product);
     }
 
     @PutMapping("/{sku}")
     public Product updateProduct(@PathVariable int sku, @RequestBody Product updatedProduct) {
-        Product existing = productRepository.findById(sku)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-
-        existing.setName(updatedProduct.getName());
-        existing.setPrice(updatedProduct.getPrice());
-        existing.setOnHand(updatedProduct.getOnHand());
-        existing.setSku(updatedProduct.getSku());
-
-        return productRepository.save(existing);
+        return productService.updateProduct(sku, updatedProduct);
     }
 
     @DeleteMapping("/{sku}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable int sku) {
-        productRepository.deleteById(sku);
+        productService.deleteProduct(sku);
     }
+
+    @PutMapping("/update-on-hand/{sku}")
+    public Product updateOnHand(@PathVariable int sku, @RequestParam(value = "newOnHand") int newOnHand) {
+        return productService.updateOnHand(sku, newOnHand);
+    }
+
+
 }
