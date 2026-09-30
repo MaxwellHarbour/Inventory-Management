@@ -1,6 +1,11 @@
 inventorymanagement/demo/DemoApplication.class
+inventorymanagement/demo/Products/ProductService.class
+inventorymanagement/demo/Products/Product.class
+inventorymanagement/demo/Transactions/Transaction.class
 inventorymanagement/demo/SecurityConfig.class
-inventorymanagement/demo/ProductController.class
-inventorymanagement/demo/Product.class
-inventorymanagement/demo/ProductService.class
-inventorymanagement/demo/ProductRepository.class
+inventorymanagement/demo/Transactions/TransactionProducer.class
+inventorymanagement/demo/Products/ProductController.class
+inventorymanagement/demo/Transactions/TransactionRepository.class
+inventorymanagement/demo/Products/ProductRepository.class
+inventorymanagement/demo/Transactions/TransactionController.class
+inventorymanagement/demo/Transactions/TransactionConsumer.class
