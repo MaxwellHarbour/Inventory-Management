@@ -2,6 +2,7 @@ package inventorymanagement.demo.Transactions;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,6 @@ public class TransactionController {
 
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
-    }
-
-    @PostMapping
-    public TransactionDTO createTransaction(@RequestBody TransactionDTO transactionDTO) {
-        return transactionService.createTransaction(transactionDTO);
     }
 
     @PostMapping ("/inventory/{sku}/receive")
@@ -49,6 +45,7 @@ public class TransactionController {
     }
 
     @PostMapping ("/inventory/{sku}/adjust")
+    @PreAuthorize ("hasRole('ADMIN') or hasRole('MANAGER')")
     public TransactionDTO adjustInventory(@PathVariable int sku, @RequestBody TransactionDTO transactionDTO) {
         transactionDTO = new TransactionDTO(sku, transactionDTO.quantity(), "manual-adjustment", transactionDTO.timestamp());
         return transactionService.createTransaction(transactionDTO);
@@ -56,9 +53,9 @@ public class TransactionController {
 
 
 
-    @GetMapping("/history/{sku}")
-    public TransactionDTO getTransactionBySku(@PathVariable int sku) {
-        return transactionService.getTransactionBySku(sku);
+    @GetMapping("/history/{productSku}")
+    public TransactionDTO getTransactionBySku(@PathVariable int productSku) {
+        return transactionService.getTransactionBySku(productSku);
     }
 
     @GetMapping("/history")

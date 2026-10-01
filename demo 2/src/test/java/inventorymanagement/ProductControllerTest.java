@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import inventorymanagement.demo.Products.ProductController;
 import inventorymanagement.demo.Products.ProductDTO;
 import inventorymanagement.demo.Products.ProductService;
+import inventorymanagement.demo.ErrorHandler;
 
 @ExtendWith(MockitoExtension.class)
 class ProductControllerTest {
@@ -36,6 +37,7 @@ class ProductControllerTest {
     void setUp() {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(new ProductController(productService))
+            .setControllerAdvice(new ErrorHandler())
                 .build();
     }
 
@@ -59,6 +61,16 @@ class ProductControllerTest {
                 .andExpect(content().json("{\"name\":\"Product\",\"price\":19.99,\"sku\":248234,\"onHand\":20}"));
 
         verify(productService).getProductBySku(248234);
+    }
+
+    @Test
+    void getMissingProductUsesGlobalNotFoundResponse() throws Exception {
+        when(productService.getProductBySku(248234))
+                .thenThrow(new java.util.NoSuchElementException("Product not found"));
+
+        mockMvc.perform(get("/products/248234"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().json("{\"status\":404,\"error\":\"Not Found\",\"message\":\"Product not found\"}"));
     }
 
     @Test

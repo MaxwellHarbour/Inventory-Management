@@ -65,6 +65,15 @@ class TransactionServiceTest {
     }
 
     @Test
+    void createTransactionAcceptsEverySupportedTransactionType() {
+        for (String type : List.of("receive", "sell", "return", "damage", "manual-adjustment")) {
+            TransactionDTO input = new TransactionDTO(42, 1, type, "01/01/2024");
+
+            assertEquals(input, transactionService.createTransaction(input));
+        }
+    }
+
+    @Test
     void getTransactionsLastSevenDaysFiltersToRecentEntries() {
         LocalDate today = LocalDate.now();
         when(transactionRepository.findAll()).thenReturn(List.of(
@@ -91,5 +100,21 @@ class TransactionServiceTest {
 
         assertEquals(2, result.size());
         assertEquals(List.of(2, 3), result.stream().map(TransactionDTO::sku).toList());
+    }
+
+    @Test
+    void getTransactionBySkuMapsRepositoryResultToDto() {
+        TransactionDTO transaction = new TransactionDTO(248234, -3, "sell", "01/01/2024");
+        when(transactionRepository.findByProductSku(42)).thenReturn(transaction);
+
+        assertEquals(transaction, transactionService.getTransactionBySku(42));
+    }
+
+    @Test
+    void getTransactionBySkuThrowsNotFoundWhenMissing() {
+        when(transactionRepository.findByProductSku(248234)).thenReturn(null);
+
+        assertThrows(java.util.NoSuchElementException.class,
+                () -> transactionService.getTransactionBySku(248234));
     }
 }

@@ -1,6 +1,7 @@
 package inventorymanagement.demo.Products;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class ProductService {
     public ProductDTO getProductBySku(int sku) {
         return productRepository.findById(sku)
                 .map(this::toProductDTO)
-                .orElse(null);
+                .orElseThrow(() -> new NoSuchElementException("Product not found"));
     }
 
     public ProductDTO saveProduct(ProductDTO productDTO) {
@@ -27,7 +28,7 @@ public class ProductService {
 
     public ProductDTO updateProduct(int sku, ProductDTO updatedProduct) {
         Product existing = productRepository.findById(sku)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+            .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
         existing.setName(updatedProduct.name());
         existing.setPrice(updatedProduct.price());
@@ -43,7 +44,7 @@ public class ProductService {
 
     public ProductDTO updateOnHand(int sku, int newOnHand) {
         Product existing = productRepository.findById(sku)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+            .orElseThrow(() -> new NoSuchElementException("Product not found"));
 
         existing.setOnHand(newOnHand);
         return toProductDTO(productRepository.save(existing));
