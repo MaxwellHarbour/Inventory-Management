@@ -1,8 +1,6 @@
 package inventorymanagement.demo.Transactions;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,9 +9,7 @@ import jakarta.persistence.Table;
 public class Transaction {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer transactionId;
-
+    private String transactionId;
     private  int productSku;
     private  int quantity;
     private  String transactionType; // purchase, sale, return, manual_adjustment, markdown, etc.
@@ -21,7 +17,7 @@ public class Transaction {
 
     public Transaction() {}
 
-    public Transaction(Integer transactionId, int productSku, int quantity, String transactionType, String transactionDate) {
+    public Transaction(String transactionId, int productSku, int quantity, String transactionType, String transactionDate) {
         this.transactionId = transactionId;
         this.productSku = productSku;
         this.quantity = quantity;
@@ -29,13 +25,13 @@ public class Transaction {
         this.transactionDate = transactionDate;
     }
 
-    public Integer getTransactionId() { return transactionId; }
+    public String getTransactionId() { return transactionId; }
     public int getProductSku() { return productSku; }
     public int getQuantity() { return quantity; }
     public String getTransactionType() { return transactionType; }
     public String getTransactionDate() { return transactionDate; }
 
-    public void setTransactionId(Integer transactionId) { this.transactionId = transactionId; }
+    public void setTransactionId(String transactionId) { this.transactionId = transactionId; }
     public void setProductSku(int productSku) { this.productSku = productSku; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public void setTransactionType(String transactionType) { this.transactionType = transactionType; }

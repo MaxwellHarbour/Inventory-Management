@@ -135,7 +135,7 @@ curl -X POST http://localhost:8080/transactions/inventory/1001/receive \
 
 ## Current development notes
 
-This is a learning and portfolio project, and some behavior is still being developed. Kafka applies inventory movements asynchronously. Idempotent processing and additional inventory validation (such as rejecting sales that exceed stock) are planned improvements; avoid relying on the current transaction endpoints for production inventory accounting. The transaction repository query now uses the entity's `productSku` field for SKU lookups.
+This is a learning and portfolio project, and some behavior is still being developed. Kafka applies inventory movements asynchronously. Idempotent processing and additional inventory validation are planned improvements; avoid relying on the current transaction endpoints for production inventory accounting.
 
 ## Project layout
 
