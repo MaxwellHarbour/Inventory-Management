@@ -40,10 +40,10 @@ class ProductTest {
 	}
 
 	@Test
-	void getProductBySkuReturnsNullWhenMissing() {
+	void getProductBySkuThrowsNotFoundWhenMissing() {
 		when(productRepository.findById(248234)).thenReturn(Optional.empty());
 
-		assertEquals(null, productService.getProductBySku(248234));
+		assertThrows(java.util.NoSuchElementException.class, () -> productService.getProductBySku(248234));
 	}
 
 	@Test

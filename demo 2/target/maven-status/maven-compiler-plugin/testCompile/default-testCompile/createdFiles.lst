@@ -1,0 +1,12 @@
+inventorymanagement/UsersTest.class
+inventorymanagement/UsersServiceTest.class
+inventorymanagement/TransactionServiceTest.class
+inventorymanagement/TransactionControllerTest.class
+inventorymanagement/MethodAuthorizationTest.class
+inventorymanagement/ErrorHandlerTest.class
+inventorymanagement/TransactionProducerTest.class
+inventorymanagement/ErrorHandlerTest$TestController.class
+inventorymanagement/ProductTest.class
+inventorymanagement/ProductControllerTest.class
+inventorymanagement/MethodAuthorizationTest$TestSecurityConfiguration.class
+inventorymanagement/UsersControllerTest.class

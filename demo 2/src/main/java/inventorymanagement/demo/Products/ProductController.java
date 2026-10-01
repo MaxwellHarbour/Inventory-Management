@@ -3,6 +3,7 @@ package inventorymanagement.demo.Products;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,26 +35,30 @@ public class ProductController {
         return productService.getProductBySku(sku);
     }
 
-    // Everything below this line should only be used by seller users
+    // Everything below this line should only be used by manager or admin users
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize ("hasRole('ADMIN') or hasRole('MANAGER')")
     public ProductDTO createProduct(@RequestBody ProductDTO productDTO) {
         return productService.saveProduct(productDTO);
     }
 
     @PutMapping("/{sku}")
+    @PreAuthorize ("hasRole('ADMIN') or hasRole('MANAGER')")
     public ProductDTO updateProduct(@PathVariable int sku, @RequestBody ProductDTO updatedProduct) {
         return productService.updateProduct(sku, updatedProduct);
     }
 
     @DeleteMapping("/{sku}")
+    @PreAuthorize ("hasRole('ADMIN') or hasRole('MANAGER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteProduct(@PathVariable int sku) {
         productService.deleteProduct(sku);
     }
 
     @PutMapping("/update-on-hand/{sku}")
+    @PreAuthorize ("hasRole('ADMIN') or hasRole('MANAGER')")
     public ProductDTO updateOnHand(@PathVariable int sku, @RequestParam(value = "newOnHand") int newOnHand) {
         return productService.updateOnHand(sku, newOnHand);
     }

@@ -37,10 +37,13 @@ public class TransactionService {
                 .toList();
     }
 
-    public TransactionDTO getTransactionBySku(int sku) {
-        return transactionRepository.findById(sku)
-                .map(this::toTransactionDTO)
-                .orElse(null);
+    public TransactionDTO getTransactionBySku(int productSku) {
+        // Already returns a TransactionDTO object, so no need to convert it again
+        TransactionDTO transaction = transactionRepository.findByProductSku(productSku);
+        if (transaction == null) {
+            throw new java.util.NoSuchElementException("Transaction not found");
+        }
+        return transaction;
     }   
 
     public List<TransactionDTO> getNegativeTransactions() {
