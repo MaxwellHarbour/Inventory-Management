@@ -21,7 +21,7 @@ public class TransactionConsumer {
     @KafkaListener (topics = "transactions", groupId = "transaction-group")
     @Transactional 
     public void listen(Transaction transaction) {
-        Integer transactionId = transaction.getTransactionId();
+        String transactionId = transaction.getTransactionId();
         if (transactionId != null && transactionRepository.existsById(transactionId)) {
             return;
         }
@@ -35,6 +35,6 @@ public class TransactionConsumer {
         transactionRepository.save(transaction);
     }
 
-    
+
 
 }

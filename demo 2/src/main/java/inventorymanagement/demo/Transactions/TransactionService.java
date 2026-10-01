@@ -3,6 +3,7 @@ package inventorymanagement.demo.Transactions;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class TransactionService {
 
     public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
         Transaction transaction = toTransaction(transactionDTO);
+        String externalId = UUID.randomUUID().toString();
+        transaction.setTransactionId(externalId);
         transactionProducer.sendTransaction(transaction);
         return toTransactionDTO(transaction);
     }
@@ -57,12 +60,6 @@ public class TransactionService {
         String transactionDate = transactionDTO.timestamp() == null || transactionDTO.timestamp().isBlank()
                 ? LocalDate.now().format(DATE_FORMATTER)
                 : transactionDTO.timestamp();
-
-        List<String> validTransactionTypes = List.of("receive", "sell", "return", "damage", "manual-adjustment");
-
-        if (!validTransactionTypes.contains(transactionDTO.transactionType())) {
-            throw new IllegalArgumentException("Invalid transaction type: " + transactionDTO.transactionType());
-        }
 
         return new Transaction(
                 null,

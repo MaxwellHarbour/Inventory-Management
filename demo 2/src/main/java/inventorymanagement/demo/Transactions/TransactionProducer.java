@@ -14,7 +14,7 @@ public class TransactionProducer {
     }
 
     public void sendTransaction(Transaction transaction) {
-        kafkaTemplate.send(TOPIC, transaction);
+        kafkaTemplate.send(TOPIC, transaction.getTransactionId(), transaction);
     }
 }
 
